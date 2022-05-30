@@ -1,9 +1,9 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="_Default" %>
 
-<%@ Register Assembly="DevExpress.Web.ASPxPivotGrid.v13.1, Version=13.1.14.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
+<%@ Register Assembly="DevExpress.Web.ASPxPivotGrid.v21.2, Version=21.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
     Namespace="DevExpress.Web.ASPxPivotGrid" TagPrefix="dxwpg" %>
-<%@ Register assembly="DevExpress.XtraCharts.v13.1.Web, Version=13.1.14.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" namespace="DevExpress.XtraCharts.Web" tagprefix="dxchartsui" %>
-<%@ Register assembly="DevExpress.XtraCharts.v13.1, Version=13.1.14.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" namespace="DevExpress.XtraCharts" tagprefix="cc1" %>
+<%@ Register assembly="DevExpress.XtraCharts.v21.2.Web, Version=21.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" namespace="DevExpress.XtraCharts.Web" tagprefix="dxchartsui" %>
+<%@ Register assembly="DevExpress.XtraCharts.v21.2, Version=21.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" namespace="DevExpress.XtraCharts" tagprefix="cc1" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
@@ -13,14 +13,23 @@
     <form id="form1" runat="server">
     <div>
         <dxwpg:ASPxPivotGrid ID="ASPxPivotGrid1" runat="server" 
-            ongridlayout="ASPxPivotGrid1_GridLayout">
+            ongridlayout="ASPxPivotGrid1_GridLayout" ClientIDMode="AutoID" IsMaterialDesign="False">
             <Fields>
-                <dxwpg:PivotGridField ID="fieldName" SortOrder="Descending"   Area="RowArea" AreaIndex="0" FieldName="Name">
+                <dxwpg:PivotGridField ID="fieldName" SortOrder="Descending"   Area="RowArea" AreaIndex="0">
+                    <DataBindingSerializable>
+                        <dxwpg:DataSourceColumnBinding ColumnName="Name" />
+                    </DataBindingSerializable>
                 </dxwpg:PivotGridField>
-                <dxwpg:PivotGridField ID="fieldValue" Area="DataArea" AreaIndex="0" FieldName="Value">
+                <dxwpg:PivotGridField ID="fieldValue" Area="DataArea" AreaIndex="0">
+                    <DataBindingSerializable>
+                        <dxwpg:DataSourceColumnBinding ColumnName="Value" />
+                    </DataBindingSerializable>
                 </dxwpg:PivotGridField>
                 <dxwpg:PivotGridField ID="fieldDate" Area="ColumnArea" AreaIndex="0" 
-                    FieldName="Date" GroupInterval="Date" UnboundFieldName="fieldDate">
+                    FieldName="Date" UnboundFieldName="fieldDate">
+                    <DataBindingSerializable>
+                        <dxwpg:DataSourceColumnBinding ColumnName="Date" GroupInterval="Date" />
+                    </DataBindingSerializable>
                 </dxwpg:PivotGridField>
             </Fields>
             <ClientSideEvents AfterCallback="function(s, e) {
@@ -32,10 +41,11 @@
                 ProvideColumnGrandTotals="False"  />
             <OptionsPager RowsPerPage="8" ShowSeparators="True">
             </OptionsPager>
+            <OptionsData DataProcessingEngine="Optimized" />
         </dxwpg:ASPxPivotGrid>
         <dxchartsui:WebChartControl ID="WebChartControl1" runat="server" 
             DataSourceID="ASPxPivotGrid1" Height="300px" Width="600px" 
-            SeriesDataMember="Series" ClientInstanceName="ChartControl">
+            SeriesDataMember="Series" ClientInstanceName="ChartControl" CrosshairEnabled="True">
             <diagramserializable>
                 <cc1:XYDiagram3D RotationMatrixSerializable="0.766044443118978;-0.219846310392954;0.604022773555054;0;0;0.939692620785908;0.342020143325669;0;-0.642787609686539;-0.262002630229385;0.719846310392954;0;0;0;0;1">
                     <axisx>
@@ -46,7 +56,7 @@
                     </axisy>
                 </cc1:XYDiagram3D>
             </diagramserializable>
-<SeriesTemplate argumentdatamember="Arguments" valuedatamembersserializable="Values"   >
+<SeriesTemplate argumentdatamember="Arguments" valuedatamembersserializable="Values" ArgumentScaleType="Qualitative"   >
 <ViewSerializable>
 
 <cc1:SplineArea3DSeriesView Transparency="0"></cc1:SplineArea3DSeriesView></ViewSerializable>
